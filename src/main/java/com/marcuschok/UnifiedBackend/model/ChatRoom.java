@@ -21,6 +21,14 @@ public class ChatRoom {
     )
     private Set<User> users;
 
+    @ManyToMany
+    @JoinTable(
+            name = "chatroom_mod",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> mods;
+
     @OneToMany(mappedBy = "chat")
     private Set<Message> messages;
 
