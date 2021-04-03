@@ -15,27 +15,19 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private ChatRoom chat;
+    private String authorId;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
+    private String author;
 
     private String content;
 
     public Message() {
     }
 
-    public Message(User author, String content) {
+    public Message(String authorId, String author, String content) {
+        this.authorId = authorId;
         this.author = author;
         this.content = content;
-    }
-
-    @PrePersist
-    public void onCreate() {
-        this.timestamp = new Date();
     }
 
     public Long getId() {
@@ -54,11 +46,19 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public User getAuthor() {
+    public String getAuthorId() {
+        return this.authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -70,13 +70,18 @@ public class Message {
         this.content = content;
     }
 
+    @PrePersist
+    public void onCreate() {
+        this.timestamp = new Date();
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + this.id +
                 ", timestamp=" + this.timestamp +
-                ", chat=" + this.chat +
-                ", author=" + this.author +
+                ", authorId='" + this.authorId + '\'' +
+                ", author='" + this.author + '\'' +
                 ", content='" + this.content + '\'' +
                 '}';
     }
