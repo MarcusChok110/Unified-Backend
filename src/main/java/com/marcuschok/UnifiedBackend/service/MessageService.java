@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MessageService {
@@ -20,7 +21,15 @@ public class MessageService {
         return this.messageRepository.findAllByOrderByTimestampAsc();
     }
 
+    public Optional<Message> findById(Long id) {
+        return this.messageRepository.findById(id);
+    }
+
     public Message save(Message message) {
         return this.messageRepository.save(message);
+    }
+
+    public void delete(Message message) {
+        this.messageRepository.delete(message);
     }
 }
