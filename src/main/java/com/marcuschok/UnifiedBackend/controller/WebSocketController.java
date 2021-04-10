@@ -8,6 +8,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.util.Optional;
+
 @Controller
 public class WebSocketController {
 
@@ -20,10 +22,22 @@ public class WebSocketController {
         this.objectMapper = objectMapper;
     }
 
-    @MessageMapping("/messages")
+    @MessageMapping("/add")
     @SendTo("/topic/responses")
-    public Message socketResponse(String messageJson) throws Exception {
+    public Message addResponse(String messageJson) throws Exception {
         Message message = this.objectMapper.readValue(messageJson, Message.class);
         return this.messageService.save(message);
+    }
+
+    @MessageMapping("/delete")
+    @SendTo("/topic/responses")
+    public Long deleteResponse(String strId) {
+        Long id = Long.parseLong(strId);
+        Optional<Message> messageOptional = this.messageService.findById(id);
+        if (messageOptional.isEmpty()) {
+            throw new IllegalStateException("Message not found");
+        }
+        this.messageService.delete(messageOptional.get());
+        return id;
     }
 }
