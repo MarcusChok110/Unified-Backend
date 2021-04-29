@@ -4,6 +4,8 @@ This a REST API and WebSocket server built with Java and Spring Boot for the Uni
 is connected to a local MySQL database using Spring Data JPA and endpoints are protected by Auth0 and Spring Security.
 By default, the application is hosted locally at http://localhost:8080/.
 
+The authentication / authorization of this application was provided with help from Auth0. If you would like to learn more about this process, please visit [this article](https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/).
+
 ## Database Schemas (JPA Entities)
 
 ### Message
